@@ -12,6 +12,7 @@ langchain-community==0.3.27
 langchain-core==0.3.72
 langchain-pinecone==0.2.11
 langchain-groq==0.3.6
+langchain-huggingface==0.3.1
 
 # Pinecone SDK
 pinecone-client==3.2.2

@@ -9,7 +9,7 @@ from fastapi.responses import JSONResponse
 from dotenv import load_dotenv
 
 from langchain_pinecone import PineconeVectorStore
-from langchain.embeddings import HuggingFaceBgeEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.document_loaders import PyPDFLoader
 from langchain.chains import RetrievalQA
@@ -44,12 +44,10 @@ def initialize_pinecone():
     return pc, pc.Index(index_name)
 
 # Initialize embeddings
+
+
 def initialize_embeddings():
-    return HuggingFaceBgeEmbeddings(
-        model_name="BAAI/bge-large-en-v1.5",
-        model_kwargs={"device": "cpu"},
-        encode_kwargs={"normalize_embeddings": True},
-    )
+    return HuggingFaceEmbeddings(model_name="BAAI/bge-base-en")
 
 # PDF processing and indexing
 def process_pdf_files(pdf_files: List[UploadFile]):
@@ -159,3 +157,4 @@ async def upload_pdf(files: List[UploadFile] = File(...)):
 async def query_pdf(question: str = Form(...)):
     result = process_query(question)
     return result
+

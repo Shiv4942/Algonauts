@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 from langchain_pinecone import PineconeVectorStore
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.document_loaders import PyPDFLoader
+from langchain_community.document_loaders import PyPDFLoader
 from langchain.chains import RetrievalQA
 from langchain.prompts import PromptTemplate
 from langchain_groq import ChatGroq
@@ -157,4 +157,5 @@ async def upload_pdf(files: List[UploadFile] = File(...)):
 async def query_pdf(question: str = Form(...)):
     result = process_query(question)
     return result
+
 

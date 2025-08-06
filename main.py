@@ -21,9 +21,18 @@ load_dotenv()
 
 app = FastAPI()
 
+# Root endpoint that accepts both GET and POST
 @app.get("/")
+@app.post("/")
 def read_root():
-    return {"message": "Hello, Render!"}
+    return {"message": "Hello, Render!", "status": "healthy"}
+
+# Health check endpoint (common for deployment platforms)
+@app.get("/health")
+@app.post("/health")
+def health_check():
+    return {"status": "healthy", "service": "PDF RAG API"}
+
 # Globals
 vectorstore = None
 index = None
@@ -47,8 +56,6 @@ def initialize_pinecone():
     return pc, pc.Index(index_name)
 
 # Initialize embeddings
-
-
 def initialize_embeddings():
     return HuggingFaceEmbeddings(model_name="BAAI/bge-base-en")
 
@@ -160,6 +167,3 @@ async def upload_pdf(files: List[UploadFile] = File(...)):
 async def query_pdf(question: str = Form(...)):
     result = process_query(question)
     return result
-
-
-

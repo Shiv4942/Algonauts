@@ -21,6 +21,9 @@ load_dotenv()
 
 app = FastAPI()
 
+@app.get("/")
+def read_root():
+    return {"message": "Hello, Render!"}
 # Globals
 vectorstore = None
 index = None
@@ -157,5 +160,6 @@ async def upload_pdf(files: List[UploadFile] = File(...)):
 async def query_pdf(question: str = Form(...)):
     result = process_query(question)
     return result
+
 
 
